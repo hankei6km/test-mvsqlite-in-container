@@ -1,0 +1,12 @@
+{
+  "name": "python",
+	"build": {
+		"dockerfile": "Dockerfile",
+    "context": "."
+  },
+  // "--privileged" は fuse を使うために必要
+  "runArgs": ["--privileged"],
+
+  "remoteUser": "vscode",
+  "postStartCommand": [ ]
+}
