@@ -1,12 +1,19 @@
 {
-  "name": "python",
+  "name": "mbsqlite",
 	"build": {
 		"dockerfile": "Dockerfile",
     "context": "."
   },
-  // "--privileged" は fuse を使うために必要
-  "runArgs": ["--privileged"],
+  "runArgs": ["--init", "--privileged"],
+  "overrideCommand": false,
 
   "remoteUser": "vscode",
-  "postStartCommand": [ ]
+   "remoteEnv": {
+    "GDFUSE_SA": "${localEnv:GDFUSE_SA}",
+    "BOOTSTRAP_CODE": "${localEnv:BOOTSTRAP_CODE}"
+  },
+  "postStartCommand": [
+    "/home/vscode/.local/bin/mount-gd.sh",
+    "/home/vscode/gdrive"
+  ]
 }
