@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    hostname: db
+    user: root
+    # fuse 用に必要
+    privileged: true
+    tty: true
+    command: start
+    volumes:
+      - ../vols:/opt
+    networks:
+      cluster:
+        ipv4_address: 192.168.10.10
+  node:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    hostname: node
+    user: root
+    # fuse 用に必要
+    privileged: true
+    tty: true
+    command: node
+    volumes:
+      - ../vols:/opt
+    networks:
+      cluster:
+networks:
+  cluster:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/24
